@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hero-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hero-app
+  template:
+    metadata:
+      labels:
+        app: hero-app
+    spec:
+      containers:
+        - name: hero-container
+          image: acrunleash.azurecr.io/myimage:v1
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: app-config
