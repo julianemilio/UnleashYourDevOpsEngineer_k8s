@@ -1,6 +1,6 @@
-# 🚀 Flask API Deployment with Kubernetes and Minikube
+# 🚀 Fast API Deployment with Kubernetes and Minikube
 
-This repository contains a simple example of deploying a Python Flask REST API on Kubernetes, specifically using **Minikube** for local testing.
+This repository contains a simple example of deploying a Python Fast REST API on Kubernetes, specifically using **Minikube** for local testing.
 
 ---
 
