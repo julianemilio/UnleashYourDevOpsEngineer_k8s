@@ -41,6 +41,9 @@ kubectl describe pod <pod-name>
 kubectl get events --sort-by=.metadata.creationTimestamp
 
 kubectl port-forward svc/<service-name> 8080:80
+
+kubectl config get-contexts
+kubectl config use-context CONTEXT_NAME
 ```
 
 ---
@@ -191,6 +194,29 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 8000
+```
+
+---
+
+## ☁️ AKS Monitoring
+
+### Installing Prometheus and Grafana with Helm
+
+```bash
+# Agregar repositorio de Helm
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+
+# Instalar el stack en un namespace dedicado
+kubectl create namespace monitoring
+helm install kube-prometheus-stack prometheus-community/kube-prometheus-stack \
+  --namespace monitoring \
+  --set grafana.service.type=LoadBalancer  # Para exponer Grafana públicamente
+
+
+# Extraer contraseña (versión compatible con PowerShell)
+$secret = kubectl -n monitoring get secret kube-prometheus-stack-grafana -o jsonpath="{.data.admin-password}"
+[System.Text.Encoding]::ASCII.GetString([System.Convert]::FromBase64String($secret))
 ```
 
 ---
