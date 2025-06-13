@@ -78,13 +78,13 @@ kubectl get deployments
 ### 6. Access the app
 
 ```bash
-minikube service flask-service
+minikube service hero-service
 ```
 
 Or get the URL:
 
 ```bash
-minikube service flask-service --url
+minikube service hero-service --url
 ```
 
 ### 7. Clean up
@@ -93,6 +93,46 @@ minikube service flask-service --url
 kubectl delete -f k8s/
 minikube stop
 ```
+
+---
+
+## ☁️ AKS Deployment (rgUnleash)
+
+### 1. Create the AKS Cluster
+
+```bash
+az login
+
+# Create resource group (if not already created)
+az group create --name rgUnleash --location eastus
+
+# Add proveedor - studen account
+az provider register --namespace Microsoft.ContainerService
+az provider show --namespace Microsoft.ContainerService --query "registrationState"
+
+# Create AKS cluster
+az aks create   --resource-group rgUnleash   --name hero-aks-cluster   --node-count 1 --generate-ssh-keys --node-vm-size Standard_B2ms
+```
+
+### 2. Connect to the AKS Cluster
+
+```bash
+az aks get-credentials --resource-group rgUnleash --name hero-aks-cluster
+```
+
+### 5. Apply Kubernetes Manifests
+
+```bash
+kubectl apply -f k8s/
+```
+
+### 6. Access the Application
+
+```bash
+kubectl get svc hero-service
+```
+
+Copy the external IP and open in browser.
 
 ---
 

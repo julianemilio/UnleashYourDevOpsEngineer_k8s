@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: flask-service
+  name: hero-service
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
-    app: flask-app
+    app: hero-app
   ports:
     - protocol: TCP
       port: 80
